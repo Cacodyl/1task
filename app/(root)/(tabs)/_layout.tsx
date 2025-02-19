@@ -20,7 +20,7 @@ const TabsLayout = () => {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Home', headerShown: false,
+                    title: 'Home', headerShown: true,
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}

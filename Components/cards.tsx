@@ -8,7 +8,7 @@ interface Props {
     onPress?: () => void
 }
 
-export const HomeCard = ({ item, onPress }: Props) => {
+export const HomeCard    = ({ item, onPress }: Props) => {
     return (
         <TouchableOpacity
             className="flex flex-col items-start w-60 h-48 relative"
@@ -20,6 +20,8 @@ export const HomeCard = ({ item, onPress }: Props) => {
                     4.2
                 </Text>
             </View>
+
+
 
             <Image source={require('../assets/icons/saladimg.jpg')}  className="w-52 h-48 rounded-lg" />
 
@@ -84,7 +86,7 @@ export const CategoryCard = ({ item, onPress }: Props) => {
         >
             <Image source={require('../assets/icons/image.png')} className="size-full rounded-2xl border-2" />
 
-            <View className="flex flex-row items-center bg-white/90 px-3 py-1.5 rounded-full absolute top-0 right-0 border-2">
+            <View className="flex flex-row items-center bg-white/90 px-3 py-1.5 rounded-full absolute top-1 right-1 border-2">
                 <Image source={require('../assets/icons/Type=Star, State=Default, Direction=Default.jpg')} className="size-3.5" />
                 <Text className="text-xs font-rubik-bold text-primary-300 ml-1">
                     4.5
