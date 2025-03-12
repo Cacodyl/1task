@@ -1,21 +1,35 @@
-
-import {SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image} from "react-native";
+import {useState, useEffect} from 'react'
+import {SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image,} from "react-native";
 import{ Link } from 'expo-router';
 import {HomeCard, SmallCard, CategoryCard} from "@/Components/cards";
 import Filters from "@/Components/filters";
 import Search from "@/Components/search";
+
+
+// let number = 0;
+
+
+
+
+
+
 export default function Index() {
+    const[count, setCount] = useState(0);
   return (
     <SafeAreaView className={"flex-1 bg-white"}>
 
         <View className="flex flex-row justify-between items-center pl-5 mt-10 pr-10">
             <View>
-                <Text className="text-xl font-poppins-bold mt-1">123 Alm Street, USA</Text>
-                <Text className="text-gray-500 text-xl font-poppins">Welcome Back Alex</Text>
+                <Text className="text-xl font-poppins-bold mt-1">123 Alm Street, USA
+                </Text>
+                <Text className="text-gray-500 text-xl font-poppins">Welcome Back Alex
+                </Text>
             </View>
             <View>
-               <TouchableOpacity> <Image source={require('../../../assets/icons/Type=Cart, State=Default, Direction=Default.jpg')}/>
-            </TouchableOpacity></View>
+               <TouchableOpacity>
+                   <Image source={require('../../assets/icons/Type=Cart, State=Default, Direction=Default.jpg')}/>
+               </TouchableOpacity>
+            </View>
         </View>
 
         <View className="px-5 py-6 mt-0">
@@ -37,17 +51,18 @@ export default function Index() {
 
 
         </View>
+
         </ScrollView>
         <ScrollView horizontal
                     showsHorizontalScrollIndicator={false}
                     className="mt-1 mb-2">
-        <View className=" flex flex-row gap-5 px-5">
+            <View className=" flex flex-row gap-5 px-5">
 
-               <CategoryCard />
-               <CategoryCard />
+                <CategoryCard />
+                <CategoryCard />
 
 
-        </View>
+            </View>
         </ScrollView>
 
 

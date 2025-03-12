@@ -9,7 +9,7 @@ const SignIn = () => {
             <ScrollView contentContainerClassName="flex-1">
                 <View className="flex-1 bg-white px-5 justify-end mb-12">
                     <View className="items-start">
-                              <Text className="text-5xl font-poppins-bold text-primary-100 leading-tight">Smart Shop</Text>
+                              <Text className="text-5xl font-poppins-bold text-primary-100 leading-tight" >Smart Shop</Text>
 
                         <Text className="text-5xl font-poppins-bold text-primary-100 leading-tight">Healthy Living</Text>
                     </View>

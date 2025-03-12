@@ -1,6 +1,11 @@
 import {View, Text, Image} from 'react-native'
 import React from 'react'
-import {Tabs} from "expo-router";
+import {Tabs, Stack} from "expo-router";
+
+
+
+
+
 const TabIcon = ({ focused, icon, title }:{focused: boolean, icon: any; title: string}  ) => (
     <View className="flex-1 mt-3 flex flex-col items-center">
         <Image source={icon} tintColor={focused ? '#61AC4D' : '#666876'} resizeMode="contain" className="size-6"/>
@@ -17,14 +22,15 @@ const TabsLayout = () => {
             }}
         >
 
+
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Home', headerShown: true,
+                    title: 'Home', headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}
-                            icon={require('../../../assets/icons/homeicon.png')}  // Change to your own image
+                            icon={require('../../assets/icons/homeicon.png')}
                             title="Home"
                         />
                     )
@@ -40,7 +46,7 @@ const TabsLayout = () => {
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}
-                            icon={require('../../../assets/icons/searchicon.png')}  // Change to your own image
+                            icon={require('../../assets/icons/searchicon.png')}
                             title="Search"
                         />
                     )
@@ -54,7 +60,7 @@ const TabsLayout = () => {
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}
-                            icon={require('../../../assets/icons/tabler_category.png')}  // Change to your own image
+                            icon={require('../../assets/icons/tabler_category.png')}  // Change to your own image
                             title="Categories"
                         />
                     )
@@ -64,7 +70,7 @@ const TabsLayout = () => {
 
 
 
-            {/* ✅ Profile Tab */}
+
             <Tabs.Screen
                 name="profilepage"
                 options={{
@@ -73,7 +79,7 @@ const TabsLayout = () => {
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}
-                            icon={require('../../../assets/icons/proficon.png')}  // Change to your own image
+                            icon={require('../../assets/icons/proficon.png')}  // Change to your own image
                             title="Profile"
                         />
                     )

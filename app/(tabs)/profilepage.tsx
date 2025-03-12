@@ -14,8 +14,10 @@ const Profilepage = () => {
             <View className="flex flex-row items-center pl-5 mt-5 pr-10">
 
                 <View className="mt-2">
-                    <TouchableOpacity> <Image source={require('../../../assets/icons/Type=Arrow 2, State=Default, Direction=Left.jpg')}/>
-                    </TouchableOpacity></View>
+                    <TouchableOpacity>
+                        <Image source={require('../../assets/icons/Type=Arrow 2, State=Default, Direction=Left.jpg')}/>
+                    </TouchableOpacity>
+                </View>
                 <View className="flex-1 items-center">
                     <Text className="text-2xl font-poppins-bold mt-1 text-left">Product</Text>
 

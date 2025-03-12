@@ -1,15 +1,15 @@
 import {View, Text, TouchableOpacity, Image} from 'react-native'
 import React from 'react'
-interface Props {
-    item: {
-        image: any;
+import {useRouter} from "expo-router";
 
-    };
+interface Props {
+
     onPress?: () => void
 }
 
-export const HomeCard    = ({ item, onPress }: Props) => {
+export const HomeCard    = ({ onPress }: Props) => {
     return (
+
         <TouchableOpacity
             className="flex flex-col items-start w-60 h-48 relative"
             onPress={onPress}
@@ -41,11 +41,12 @@ export const HomeCard    = ({ item, onPress }: Props) => {
                 </View>
             </View>
         </TouchableOpacity>
+
     )
 }
 
 
-export const SmallCard = ({ item, onPress }: Props) => {
+export const SmallCard = ({ onPress }: Props) => {
     return (
         <TouchableOpacity
             className="flex flex-col items-start w-36 h-64 relative"
@@ -78,7 +79,7 @@ export const SmallCard = ({ item, onPress }: Props) => {
         </TouchableOpacity>
     );
 };
-export const CategoryCard = ({ item, onPress }: Props) => {
+export const CategoryCard = ({ onPress }: Props) => {
     return (
         <TouchableOpacity
             onPress={onPress}
@@ -117,7 +118,7 @@ export const CategoryCard = ({ item, onPress }: Props) => {
         </TouchableOpacity>
     );
 };
-export const CategoryCardBig = ({ item, onPress }: Props) => {
+export const CategoryCardBig = ({  onPress }: Props) => {
     return (
         <TouchableOpacity
             onPress={onPress}

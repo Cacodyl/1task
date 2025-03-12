@@ -1,11 +1,11 @@
 import {View, Text} from 'react-native'
 import React from 'react'
 
-const Searchpage = () => {
+const Product = () => {
     return (
         <View>
-            <Text>Searchpage</Text>
+            <Text>Product</Text>
         </View>
     )
 }
-export default Searchpage
+export default Product

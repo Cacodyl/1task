@@ -12,7 +12,7 @@ const Search = () => {
     };
 
     return (
-        <View className="flex flex-row items-center justify-between w-full px-4 rounded-full bg-accent-100 border border-primary-200 mt-5 py-2">
+        <View className="flex flex-row  items-center justify-between w-full px-4 rounded-full bg-accent-100 border border-primary-200 mt-5 py-2">
             <View className="flex-1 flex flex-row items-center justify-start z-50">
                 <Image source={require('../assets/icons/searchicon.png')} className="size-5" />
                 <TextInput
