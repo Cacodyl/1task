@@ -6,6 +6,8 @@ import {Tabs, Stack} from "expo-router";
 
 
 
+
+
 const TabIcon = ({ focused, icon, title }:{focused: boolean, icon: any; title: string}  ) => (
     <View className="flex-1 mt-3 flex flex-col items-center">
         <Image source={icon} tintColor={focused ? '#61AC4D' : '#666876'} resizeMode="contain" className="size-6"/>
@@ -16,6 +18,7 @@ const TabIcon = ({ focused, icon, title }:{focused: boolean, icon: any; title: s
 );
 
 const TabsLayout = () => {
+
     return (
         <Tabs
             screenOptions={{tabBarShowLabel: false, tabBarStyle: {backgroundColor: 'white', position: 'absolute', borderTopColor: '#FFFFFF', borderTopWidth: 1, minHeight: 70,}

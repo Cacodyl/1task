@@ -2,54 +2,101 @@ import React, { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { Text, ScrollView, TouchableOpacity } from "react-native";
 
-import { categories } from "../app/constants/data";
+import useCatStore from "@/app/store/useCatStore";
+import useAuthStore from "@/app/store/useAuthStore";
+import { useEffect } from "react";
+import apiClient from "@/app/api/axiosInstance";
 
 const Filters = () => {
-    const params = useLocalSearchParams<{ filter?: string }>();
-    const [selectedCategory, setSelectedCategory] = useState(
-        params.filter || "All"
-    );
+  const [error, setError] = useState<string>();
+  const [loading, setLoading] = useState(true);
+  const { accessToken } = useAuthStore();
+  const { list, selectedCategory, setSelectedCategory, setCategories } =
+    useCatStore();
 
-    const handleCategoryPress = (category: string) => {
-        if (selectedCategory === category) {
-            setSelectedCategory("");
-            router.setParams({ filter: "" });
-            return;
+  useEffect(() => {
+    const getCats = async () => {
+      if (accessToken) {
+        try {
+          const response = await apiClient.get("/categories", {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          if (response.data.success) {
+            setCategories(response.data.data);
+          } else {
+            setError("Failed loading categories");
+          }
+        } catch (err) {
+          setError("Error");
+        } finally {
+          setLoading(false);
         }
-
-        setSelectedCategory(category);
-        router.setParams({ filter: category });
+      }
     };
+    getCats();
+  }, []);
 
+  if (error) {
     return (
-        <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            className="mt-1 mb-2"
+      <Text className="text-5xl font-poppins-bold text-center"> {error} </Text>
+    );
+  }
+
+  const handleCategoryPress = (category: string) => {
+    setSelectedCategory(category === selectedCategory ? "All" : category);
+  };
+
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      className="mt-1 mb-2"
+    >
+      <TouchableOpacity
+        onPress={() => handleCategoryPress("All")}
+        className={`flex flex-col items-start mr-4 px-8 py-2 rounded-2xl ${
+          selectedCategory === "All"
+            ? "bg-primary-100"
+            : "bg-white border border-black-100"
+        }`}
+      >
+        <Text
+          className={`text-sm ${
+            selectedCategory === "All"
+              ? "text-white font-poppins-bold"
+              : "text-black font-poppins-semibold"
+          }`}
         >
-            {categories.map((item: any, index: any) => (
-                <TouchableOpacity
-                    onPress={() => handleCategoryPress(item.category)}
-                    key={index}
-                    className={`flex flex-col items-start mr-4 px-8 py-2 rounded-2xl ${
-                        selectedCategory === item.category
+          All
+        </Text>
+      </TouchableOpacity>
+
+      {list.map((category, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => handleCategoryPress(category)}
+          className={`flex flex-col items-start mr-4 px-8 py-2 rounded-2xl 
+                        ${
+                          selectedCategory === category
                             ? "bg-primary-100"
                             : "bg-white border border-black-100"
-                    }`}
-                >
-                    <Text
-                        className={`text-sm ${
-                            selectedCategory === item.category
-                                ? "text-white font-poppins-bold"
-                                : "text-black font-poppins-semibold"
                         }`}
-                    >
-                        {item.title}
-                    </Text>
-                </TouchableOpacity>
-            ))}
-        </ScrollView>
-    );
+        >
+          <Text
+            className={`text-sm ${
+              selectedCategory === category
+                ? "text-white font-poppins-bold"
+                : "text-black font-poppins-semibold"
+            }`}
+          >
+            {category}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  );
 };
 
 export default Filters;

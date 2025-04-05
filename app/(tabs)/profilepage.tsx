@@ -1,85 +1,95 @@
-import {SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image} from "react-native";
-import{ Link } from 'expo-router';
-import {CategoryCard, HomeCard, SmallCard} from "@/Components/cards";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Alert,
+} from "react-native";
+import { Link } from "expo-router";
+import { CartCard } from "@/Components/cards";
 import Filters from "@/Components/filters";
 import Search from "@/Components/search";
+import useProfileStore from "@/app/store/useProfileStore";
+import Userprofile from "@/Components/userprofile";
+import { useEffect } from "react";
+import { useRouter } from "expo-router";
+import apiClient from "@/app/api/axiosInstance";
+import useAuthStore from "@/app/store/useAuthStore";
 
 const Profilepage = () => {
-    return (
-        <SafeAreaView className={"flex-1 bg-white"}>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                className="mt-1 mb-2">
+  const { userid, cartId, username, setProfile } = useProfileStore();
+  const { accessToken } = useAuthStore();
 
-            <View className="flex flex-row items-center pl-5 mt-5 pr-10">
+  const router = useRouter();
 
-                <View className="mt-2">
-                    <TouchableOpacity>
-                        <Image source={require('../../assets/icons/Type=Arrow 2, State=Default, Direction=Left.jpg')}/>
-                    </TouchableOpacity>
-                </View>
-                <View className="flex-1 items-center">
-                    <Text className="text-2xl font-poppins-bold mt-1 text-left">Product</Text>
+  return (
+    <SafeAreaView className="flex-1 bg-white">
+      <Userprofile name={username} id={userid} cart_id={cartId} />
 
-
-                </View>
-            </View>
-            <View className="px-6">
-                <Search />
-            </View>
-            <ScrollView horizontal
-                        showsHorizontalScrollIndicator={false}
-                        className="mt-5 mb-0">
-                <View className=" flex flex-row gap-5 px-4 mb-2 pb-0 ">
-
-                    <CategoryCard />
-                    <CategoryCard />
-
-
-                </View>
-            </ScrollView>
-
-            <View className="flex flex-row justify-between items-center px-4 mt-0">
-                <Text className="font-poppins-bold text-2xl font-bold">Recommendations</Text>
-                <TouchableOpacity><Text className="font-poppins-semibold text-primary-100">View all</Text></TouchableOpacity></View>
-
-            <ScrollView horizontal
-                        showsHorizontalScrollIndicator={false}
-                        className="mt-1 mb-0">
-                <View className=" flex flex-row gap-8 mt-3 px-4">
-
-                    <SmallCard />
-                    <SmallCard/>
-                    <SmallCard />
-
-
-                </View>
-
-            </ScrollView>
-
-            <View className="flex flex-row justify-between items-center px-4 mt-3">
-                <Text className="font-poppins-bold text-2xl font-bold">Favorites</Text>
-                <TouchableOpacity><Text className="font-poppins-semibold text-primary-100">
-                    View all
-                </Text></TouchableOpacity>
-            </View>
-
-            <ScrollView horizontal
-                        showsHorizontalScrollIndicator={false}
-                        className="mt-1 mb-2">
-                <View className=" flex flex-row gap-8 mt-3 px-4">
-
-                    <SmallCard />
-                    <SmallCard/>
-                    <SmallCard />
-
-
-                </View>
-            </ScrollView>
-
-            </ScrollView>
-        </SafeAreaView>
-
-    );
-}
-export default Profilepage
+      <TouchableOpacity className="px-0 py-3 mt-8 pr-10 bg-gray-200 rounded-2xl mx-4">
+        <View className="flex flex-row justify-start items-center pl-5  pr-10">
+          <Image
+            className="size-7"
+            source={require("../../assets/icons/shopping-bag.png")}
+          />
+          <Text className="text-2xl text-black font-poppins mt-1 pl-5">
+            Your Orders
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity className="px-0 py-3 mt-8 pr-10 bg-gray-200 rounded-2xl mx-4">
+        <View className="flex flex-row justify-start items-center pl-5  pr-10">
+          <Image
+            className="size-7"
+            source={require("../../assets/icons/marker.png")}
+          />
+          <Text className="text-2xl text-black font-poppins mt-1 pl-5">
+            Addresses
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => router.push("/favourites")}
+        className="px-0 py-3 mt-8 pr-10 bg-gray-200 rounded-2xl mx-4"
+      >
+        <View className="flex flex-row justify-start items-center pl-5  pr-10">
+          <Image
+            className="size-7"
+            source={require("../../assets/icons/heart.png")}
+          />
+          <Text className="text-2xl text-black font-poppins mt-1 pl-5">
+            Favourites
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        className="px-0 py-3 mt-8 pr-10 bg-gray-200 rounded-2xl mx-4"
+        onPress={() => router.push("/cartpage")}
+      >
+        <View className="flex flex-row justify-start items-center pl-5  pr-10">
+          <Image
+            className="size-7"
+            source={require("../../assets/icons/shopping-cart.png")}
+          />
+          <Text className="text-2xl text-black font-poppins mt-1 pl-5">
+            View Cart
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity className="px-0 py-3 mt-8 pr-10 bg-gray-200 rounded-2xl mx-4">
+        <View className="flex flex-row justify-start items-center pl-5  pr-10">
+          <Image
+            className="size-7"
+            source={require("../../assets/icons/sign-out-alt.png")}
+          />
+          <Text className="text-2xl text-black font-poppins mt-1 pl-5">
+            Sign Out
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+export default Profilepage;
