@@ -10,14 +10,14 @@ import React from "react";
 import Search from "@/Components/search";
 import { Link, useRouter } from "expo-router";
 import { CartCard } from "@/Components/cards";
-import apiClient from "./api/axiosInstance";
+import apiClient from "../api/axiosInstance";
 import useCartStore from "./store/Cartfile";
 import useItemStore from "./store/useItemStore";
 import { useState, useEffect } from "react";
 import useAuthStore from "./store/useAuthStore";
 import axios from "axios";
 import Modal from "react-native-modal";
-import { addToCart, fetchCartQuery, fetchBillQuery } from "./api/cartqueries";
+import { useAddToCart, useFetchCartQuery } from "../api/cartqueries";
 import Carousel from "react-native-reanimated-carousel";
 
 interface modalprops {
@@ -27,22 +27,32 @@ interface modalprops {
 }
 
 const ItemModal = ({ Item, visible, onClose }: modalprops) => {
-  // const { accessToken } = useAuthStore();
-  // const { cart, setCart, totalitems, settotalitems, settotalprice } =
-  //   useCartStore();
+  const { accessToken } = useAuthStore();
+  const { cart, setCart, totalitems, settotalitems, settotalprice } =
+    useCartStore();
   const { favourites, addfavourite } = useItemStore();
-  const { data: cartitemslist } = fetchCartQuery();
 
-  const isAdded = cartitemslist?.some(
-    (cartItem: any) => cartItem.item_name === Item.name
-  );
+  const { data: tobesetascart } = useFetchCartQuery();
+  useEffect(() => {
+    if (tobesetascart) {
+      setCart(tobesetascart);
+    }
+  }, [tobesetascart]);
+
+  const isAdded = cart
+    ? cart.some((cartItem: any) => cartItem.item_name === Item.name)
+    : false;
   const isFav = favourites?.some((favitem) => favitem.id === Item.id);
 
   const Addtofav = () => {
     addfavourite(Item);
     console.log(favourites);
   };
-  const { mutate: triggeradd } = addToCart();
+  const { mutate: insideAddtocart } = useAddToCart();
+
+  const AddToCartfr = () => {
+    insideAddtocart(Item.id);
+  };
 
   // const AddtoCart = async () => {
   //   try {
@@ -66,9 +76,6 @@ const ItemModal = ({ Item, visible, onClose }: modalprops) => {
   //     console.error("Errro is: ", error.message || error);
   //   }
   // };
-  const AddtoCart = () => {
-    return triggeradd(Item.id);
-  };
 
   if (!Item) return null;
 
@@ -128,7 +135,7 @@ const ItemModal = ({ Item, visible, onClose }: modalprops) => {
         <View className="h-1/5 bg-white border-0.5 border-gray-200 w-[354px]">
           <View className="flex flex-row mt-7">
             <TouchableOpacity
-              onPress={AddtoCart}
+              onPress={AddToCartfr}
               disabled={isAdded}
               className={`flex flex-col items-start ml-4 px-8 py-2 rounded-2xl 
                 ${isAdded ? "bg-gray-500" : "bg-primary-100"}`}

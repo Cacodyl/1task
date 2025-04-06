@@ -5,7 +5,7 @@ import { Text, ScrollView, TouchableOpacity } from "react-native";
 import useCatStore from "@/app/store/useCatStore";
 import useAuthStore from "@/app/store/useAuthStore";
 import { useEffect } from "react";
-import apiClient from "@/app/api/axiosInstance";
+import apiClient from "@/api/axiosInstance";
 
 const Filters = () => {
   const [error, setError] = useState<string>();

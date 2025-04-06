@@ -14,40 +14,38 @@ import useCartStore from "./store/Cartfile";
 import useItemStore from "./store/useItemStore";
 import { useState, useEffect } from "react";
 import useAuthStore from "./store/useAuthStore";
-import apiClient from "./api/axiosInstance";
+import apiClient from "../api/axiosInstance";
 import axios from "axios";
 import {
-  fetchCartQuery,
-  fetchBillQuery,
-  fetchTotalitemsQuery,
-  clearCart,
-} from "./api/cartqueries";
-const CartPage = () => {
-  // const { cart, clearcart, settotalitems, setCart, settotalprice, totalprice } =
-  //   useCartStore();
-  // const { accessToken } = useAuthStore();
+  useClearCart,
+  useFetchBillQuery,
+  useFetchCartQuery,
+} from "../api/cartqueries";
 
-  // const handleclearcart = async () => {
-  //   if (accessToken) {
-  //     try {
-  //       const response = await apiClient.delete("/cart/items", {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       });
-  //       setCart(response.data.data.items);
-  //       settotalitems(response.data.data.total_items);
-  //       settotalprice(response.data.data.total_price);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  // };
-  const { data: cartitemslist } = fetchCartQuery();
-  const { data: totalprice } = fetchBillQuery();
-  const handleclearcart = () => {
-    return clearCart;
+const CartPage = () => {
+  const { accessToken } = useAuthStore();
+  // const { data: cart, isLoading } = useFetchCartQuery(accessToken);
+  // const { data: totalprice } = useFetchBillQuery(accessToken);
+  const { cart, clearcart, settotalitems, setCart, settotalprice, totalprice } =
+    useCartStore();
+
+  const handleclearcart = async () => {
+    if (accessToken) {
+      try {
+        const response = await apiClient.delete("/cart/items", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setCart(response.data.data.items);
+        settotalitems(response.data.data.total_items);
+        settotalprice(response.data.data.total_price);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
+  // const { mutate: handleclearcart } = useClearCart(accessToken);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -56,7 +54,7 @@ const CartPage = () => {
       </View>
       <View className="justify-between flex flex-row my-7 mx-5">
         <TouchableOpacity
-          onPress={handleclearcart}
+          onPress={() => handleclearcart()}
           className="border bg-gray-400 rounded-full"
         >
           <Text className="text-xl text-black font-poppins-semibold px-5 py-5">
@@ -68,7 +66,7 @@ const CartPage = () => {
         </Text>
       </View>
       <ScrollView horizontal={false}>
-        {cartitemslist?.map((cartitem: any) => (
+        {cart?.map((cartitem: any) => (
           <CartCard2
             key={cartitem.id}
             name={cartitem.item_name}

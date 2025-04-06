@@ -16,6 +16,23 @@ const FavouritesPage = () => {
 
   let id = 500;
 
+  if (!favourites.length) {
+    return (
+      <SafeAreaView className="flex-1 bg-white">
+        <View className="items-center">
+          <Text className="text-2xl font-poppins-semibold items-center justify-center">
+            Favourites
+          </Text>
+        </View>
+        <View className="items-center">
+          <Text className="text-xl font-poppins items-center justify-center">
+            Add items to favourties to display here
+          </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="items-center">

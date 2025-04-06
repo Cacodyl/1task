@@ -15,7 +15,7 @@ import useProfileStore from "@/app/store/useProfileStore";
 import Userprofile from "@/Components/userprofile";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import apiClient from "@/app/api/axiosInstance";
+import apiClient from "@/api/axiosInstance";
 import useAuthStore from "@/app/store/useAuthStore";
 
 const Profilepage = () => {

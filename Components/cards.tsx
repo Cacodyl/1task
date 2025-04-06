@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, Button } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
-import apiClient from "@/app/api/axiosInstance";
+import apiClient from "@/api/axiosInstance";
 import useCartStore from "@/app/store/Cartfile";
 import useAuthStore from "@/app/store/useAuthStore";
 import useItemStore from "@/app/store/useItemStore";
@@ -12,7 +12,11 @@ import Animated, {
   withDelay,
 } from "react-native-reanimated";
 import { useEffect } from "react";
-import { addToCart, plusQuantity, deleteItem } from "@/app/api/cartqueries";
+import {
+  useAddToCart,
+  useFetchCartQuery,
+  useClearCart,
+} from "@/api/cartqueries";
 
 interface Props {
   onPress?: () => void;
@@ -108,10 +112,6 @@ export const SmallCard = ({
   price,
   image_urls,
 }: Items) => {
-  const handleplus = () => {
-    return plusQuantity;
-  };
-
   return (
     <View className="flex flex-col items-start w-36 h-64 relative shadow-md">
       <View className="flex flex-row items-center absolute px-2 top-1 right-1 bg-white/90 p-1 rounded-full z-50">
@@ -203,12 +203,8 @@ export const CartCard = ({
   //     console.error(error);
   //   }
   // };
-  const handleplus = () => {
-    return plusQuantity;
-  };
-  const handledelete = () => {
-    return deleteItem;
-  };
+  const handleplus = () => {};
+  const handledelete = () => {};
 
   return (
     <View className="flex flex-row items-start w-60 h-30 relative bg-white my-5 mx-5">
@@ -427,44 +423,44 @@ export const FavouriteCard = ({
 }: Items) => {
   const { favourites, removefavourite } = useItemStore();
 
-  const handleremove = () => {
-    removefavourite(name);
-  };
-
   return (
-    <View className="flex flex-row items-start justify-around w-80 h-30 relative bg-gray-100 my-5 pl-4">
+    <View className="bg-white rounded-xl shadow-md px-4 py-3 mx-4 my-2 flex-row items-center h-32">
       <Image
         source={{ uri: image_url_display }}
-        className=" size-20 rounded-lg border border-gray-300 "
+        className="w-24 h-24 rounded-md mr-4"
       />
 
-      <View className="flex-1 flex flex-col content-between mt-0 px-3">
-        <Text
-          className="text-3xl font-poppins-semibold text-black-100"
-          numberOfLines={1}
-        >
-          {name}
-        </Text>
-        <Text className="text-2xl font-poppins-semibold text-black-100">
-          {"$" + price}
-        </Text>
+      <View className="flex-1 flex-row justify-between items-center">
+        <View className="max-w-[75%]">
+          <Text
+            className="text-xl mb-2 font-poppins-semibold"
+            numberOfLines={1}
+          >
+            {name}
+          </Text>
+          <Text
+            className="text-sm text-gray-500  font-poppins-semibold"
+            numberOfLines={1}
+          >
+            {description}
+          </Text>
+          <Text className="text-base text-primary-100 mt-2 font-poppins-semibold">
+            {"Price: $" + price}
+          </Text>
+        </View>
 
-        <Text className="text-sm font-poppins-semibold text-black-100">
-          {description}
-        </Text>
-      </View>
-      <View>
-        <TouchableOpacity
-          onPress={() => {
-            removefavourite(name);
-          }}
-          className="py-5 pl-6"
-        >
-          <Image
-            source={require("../assets/icons/bin.png")}
-            className="w-10 h-10"
-          />
-        </TouchableOpacity>
+        <View className="flex-col items-center space-y-2 mt-1 mr-3">
+          <TouchableOpacity
+            onPress={() => removefavourite(name)}
+            className=" rounded-full p-2"
+          >
+            <Image
+              source={require("../assets/icons/bin.png")}
+              className="w-10 h-10"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

@@ -14,13 +14,15 @@ import useItemStore from "./store/useItemStore";
 import ItemList from "@/Components/itemstock";
 import { useState } from "react";
 import useCartStore from "./store/Cartfile";
-import apiClient from "./api/axiosInstance";
+import apiClient from "../api/axiosInstance";
 import useAuthStore from "./store/useAuthStore";
 import { CategoryCard, SmallCard } from "@/Components/cards";
 
 const Produce = () => {
   const { accessToken } = useAuthStore();
+  const router = useRouter();
 
+ 
   const { catName } = useLocalSearchParams();
   const { itemsdisplayproductpage } = useItemStore();
   const { cart, setCart, settotalitems, settotalprice } = useCartStore();
@@ -32,6 +34,9 @@ const Produce = () => {
   const handleSearch = (text: string) => {
     setSearch(text);
   };
+  const handleDismiss = () => {
+    router.dismiss();
+  };
 
   const FinalDisplay = ItemstoDisplayArray.filter((item) =>
     item.name?.toLowerCase().includes(search.toLowerCase() || "")
@@ -42,7 +47,7 @@ const Produce = () => {
       <ScrollView showsVerticalScrollIndicator={false} className="mt-1 mb-2">
         <View className="flex flex-row items-center pl-5 mt-5 pr-10">
           <View className="mt-2">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleDismiss}>
               <Image
                 className="size-8"
                 source={require("../assets/icons/arrow-left.png")}

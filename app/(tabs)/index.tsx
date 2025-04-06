@@ -11,24 +11,23 @@ import { Link, useRouter } from "expo-router";
 import { HomeCard, FavouriteCard, CategoryCard } from "@/Components/cards";
 import Filters from "@/Components/filters";
 
-import { fetchCartQuery, fetchBillQuery, fetchTotalitemsQuery } from "../api/cartqueries";
-
-
 import ItemList from "@/Components/itemstock";
 import ItemModal from "../itemmodal";
 import useAuthStore from "../store/useAuthStore";
 import axios from "axios";
 import useCartStore from "../store/Cartfile";
-import apiClient from "../api/axiosInstance";
+import apiClient from "../../api/axiosInstance";
 import useProfileStore from "../store/useProfileStore";
+import { useFetchCartQuery, useFetchTotitQuery } from "../../api/cartqueries";
 
 export default function Index() {
   const { username, setProfile } = useProfileStore();
   const { accessToken } = useAuthStore();
-  // const { cart, setCart, settotalprice, settotalitems, totalitems } =
-  //   useCartStore();
+  // const { data: totalitems } = useFetchTotitQuery(accessToken);
+  const { cart, setCart, settotalprice, settotalitems, totalitems } =
+    useCartStore();
 
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   // const fetchCart = async () => {
   //   if (accessToken) {
@@ -51,9 +50,13 @@ export default function Index() {
   // useEffect(() => {
   //   fetchCart();
   // }, [totalitems]);
-  const{data: cartitemslist} = fetchCartQuery();
-  const {data: totalitems} = fetchTotalitemsQuery();
 
+  const { data: tosetastotalitems } = useFetchTotitQuery();
+  useEffect(() => {
+    
+      settotalitems(tosetastotalitems);
+   
+  }, [tosetastotalitems]);
 
   const router = useRouter();
 
@@ -94,7 +97,7 @@ export default function Index() {
 
   return (
     <SafeAreaView className={"flex-1 bg-white"}>
-      <View className="flex flex-row justify-between items-center pl-5 mt-0 pr-10">
+      <View className="flex flex-row justify-between items-center pl-5 mt-0 pr-7">
         <View>
           <Text className="text-xl font-poppins-bold mt-1">
             123 Alm Street, USA
@@ -103,15 +106,15 @@ export default function Index() {
             {"Welcome back, " + username}
           </Text>
         </View>
-        <View>
+        <View className="pt-2">
           <TouchableOpacity onPress={handleCartPress}>
             <Image
-              className="size-10"
+              className="size-12"
               source={require("../../assets/icons/shopping-cart.png")}
             />
             {totalitems > 0 ? (
               <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center">
-                <Text className="text-white text-xs font-poppins-semibold">
+                <Text className="text-white text-xs font-poppins-bold">
                   {totalitems}
                 </Text>
               </View>

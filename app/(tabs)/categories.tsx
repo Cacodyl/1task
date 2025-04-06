@@ -10,7 +10,7 @@ import React from "react";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useEffect } from "react";
-import apiClient from "@/app/api/axiosInstance";
+import apiClient from "@/api/axiosInstance";
 import Search from "@/Components/search";
 import { CategoryCardBig } from "@/Components/cards";
 import useAuthStore from "@/app/store/useAuthStore";
@@ -37,24 +37,7 @@ const Categories = () => {
           </Text>
         </View>
       </View>
-      <View className="flex flex-row justify-between items-center pl-5 mt-10 pr-10">
-        <View>
-          <Text className="text-xl font-poppins-bold mt-1">
-            123 Alm Street, USA
-          </Text>
-          <Text className="text-gray-500 text-xl font-poppins">
-            Welcome Back Alex
-          </Text>
-        </View>
-        <View>
-          <TouchableOpacity>
-            <Image
-              className="size-10"
-              source={require("../../assets/icons/shopping-cart.png")}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+
       <ScrollView showsVerticalScrollIndicator={false} className="mt-1 mb-2">
         <View className="flex flex-col gap-5 mt-5 px-5">
           {list.map((catName, index) => (

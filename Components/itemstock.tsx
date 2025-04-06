@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import useItemStore from "@/app/store/useItemStore";
 import useAuthStore from "@/app/store/useAuthStore";
-import apiClient from "@/app/api/axiosInstance";
+import apiClient from "@/api/axiosInstance";
 import { HomeCard } from "./cards";
 import useCatStore from "@/app/store/useCatStore";
 import ItemModal from "@/app/itemmodal";
