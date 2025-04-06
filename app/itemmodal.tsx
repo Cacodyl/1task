@@ -7,7 +7,7 @@ import {
   Image,
 } from "react-native";
 import React from "react";
-import Search from "@/Components/search";
+
 import { Link, useRouter } from "expo-router";
 import { CartCard } from "@/Components/cards";
 import apiClient from "../api/axiosInstance";

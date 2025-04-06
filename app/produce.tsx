@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import React from "react";
-import Search from "@/Components/search";
+
 import { Link, useRouter, useLocalSearchParams } from "expo-router";
 import useItemStore from "./store/useItemStore";
 import ItemList from "@/Components/itemstock";
@@ -17,12 +17,16 @@ import useCartStore from "./store/Cartfile";
 import apiClient from "../api/axiosInstance";
 import useAuthStore from "./store/useAuthStore";
 import { CategoryCard, SmallCard } from "@/Components/cards";
+import { useAddToCart } from "@/api/cartqueries";
 
 const Produce = () => {
   const { accessToken } = useAuthStore();
   const router = useRouter();
+  const { mutate: addtocartsmallcard } = useAddToCart();
+  const AddToCartSmallCard = (id: number | null) => {
+    addtocartsmallcard(id);
+  };
 
- 
   const { catName } = useLocalSearchParams();
   const { itemsdisplayproductpage } = useItemStore();
   const { cart, setCart, settotalitems, settotalprice } = useCartStore();
@@ -71,7 +75,7 @@ const Produce = () => {
                 value={search}
                 onChangeText={handleSearch}
                 placeholder="Search for anything"
-                className="text-sm font-rubik text-black-300 ml-2 flex-1"
+                className="text-base font-rubik text-black-300 ml-2 flex-1"
               />
             </View>
 
@@ -113,28 +117,7 @@ const Produce = () => {
           <View className=" flex flex-row gap-8 mt-3 px-4">
             {FinalDisplay.map((Item) => (
               <SmallCard
-                onPress={async () => {
-                  try {
-                    const response = await apiClient.post(
-                      "/cart/items",
-                      {
-                        item_id: Item.id,
-                        quantity: 1,
-                      },
-
-                      {
-                        headers: {
-                          Authorization: `Bearer ${accessToken}`,
-                        },
-                      }
-                    );
-                    settotalprice(response.data.data.total_price);
-                    setCart(response.data.data.items);
-                    settotalitems(response.data.data.total_items);
-                  } catch (error: any) {
-                    console.error("Errro is: ", error.message || error);
-                  }
-                }}
+                onPress={() => AddToCartSmallCard(Item.id)}
                 key={Item.id}
                 name={Item.name}
                 price={Item.price}

@@ -68,10 +68,11 @@ export const useAddToCart = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["cartitems"] });
+      queryClient.invalidateQueries({ queryKey: ["cartbill"] });
     },
   });
 };
-export const useUpdateCartItem = () => {
+export const usePlusQuantity = () => {
   const { accessToken } = useAuthStore();
   const queryClient = useQueryClient();
 
@@ -94,8 +95,9 @@ export const useUpdateCartItem = () => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cartitems"] });
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cartitems"] });
+      queryClient.invalidateQueries({ queryKey: ["cartbill"] });
     },
   });
 };
@@ -113,6 +115,8 @@ export const useDeleteCartItem = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cartitems"] });
+      queryClient.invalidateQueries({ queryKey: ["cartbill"] });
     },
   });
 };
@@ -130,6 +134,8 @@ export const useClearCart = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cartitems"] });
+      queryClient.invalidateQueries({ queryKey: ["cartbill"] });
     },
   });
 };

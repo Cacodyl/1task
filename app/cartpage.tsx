@@ -29,23 +29,34 @@ const CartPage = () => {
   const { cart, clearcart, settotalitems, setCart, settotalprice, totalprice } =
     useCartStore();
 
-  const handleclearcart = async () => {
-    if (accessToken) {
-      try {
-        const response = await apiClient.delete("/cart/items", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        setCart(response.data.data.items);
-        settotalitems(response.data.data.total_items);
-        settotalprice(response.data.data.total_price);
-      } catch (error) {
-        console.error(error);
-      }
+  const { data: tobesetastotalprice } = useFetchBillQuery();
+  useEffect(() => {
+    settotalprice(tobesetastotalprice);
+  }, [tobesetastotalprice]);
+
+  // const handleclearcart = async () => {
+  //   if (accessToken) {
+  //     try {
+  //       const response = await apiClient.delete("/cart/items", {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       });
+  //       setCart(response.data.data.items);
+  //       settotalitems(response.data.data.total_items);
+  //       settotalprice(response.data.data.total_price);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  // };
+  const { mutate: handleclearcart } = useClearCart();
+  const { data: tobesetascart } = useFetchCartQuery();
+  useEffect(() => {
+    if (tobesetascart) {
+      setCart(tobesetascart);
     }
-  };
-  // const { mutate: handleclearcart } = useClearCart(accessToken);
+  }, [tobesetascart]);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
