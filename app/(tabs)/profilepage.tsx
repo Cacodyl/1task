@@ -10,7 +10,7 @@ import {
 import { Link } from "expo-router";
 import { CartCard } from "@/Components/cards";
 import Filters from "@/Components/filters";
-import Search from "@/Components/search";
+
 import useProfileStore from "@/app/store/useProfileStore";
 import Userprofile from "@/Components/userprofile";
 import { useEffect } from "react";

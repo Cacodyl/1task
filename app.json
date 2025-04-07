@@ -12,10 +12,17 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#ffffff",
+        "allowCleartext": true
+      },
+      "config": {
+        "cleartextTraffic": true
+      },
+      "package": "com.raghu2509.groceryapp"
+
     },
     "web": {
       "bundler": "metro",
@@ -45,10 +52,18 @@
             "./assets/fonts/Poppins-Light.ttf"
           ]
         }
-       ]   
+      ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "9b00c556-7f04-4a9c-8b1a-61a1b821b237"
+      }
     }
   }
 }

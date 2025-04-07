@@ -89,6 +89,16 @@ const ItemModal = ({ Item, visible, onClose }: modalprops) => {
       backdropOpacity={0.5}
     >
       <SafeAreaView className="h-3/4 rounded-2xl overflow-hidden">
+        <TouchableOpacity
+          onPress={onClose}
+          className="absolute top-2.5 right-2.5 bg-white rounded-full p-2 shadow-md z-10"
+        >
+          <Image
+            source={require("../assets/icons/close.png")}
+            className="w-10 h-10"
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
         <View className="h-2/5 text-xl w-[354px]">
           <Carousel
             width={354}

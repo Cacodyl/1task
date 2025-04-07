@@ -23,7 +23,7 @@ const TabIcon = ({
         focused
           ? "text-primary-100 font-poppins-semibold"
           : "text-primary-200 font-poppins"
-      } text-xs w-full text-center mt-1`}
+      } text-xs w-full  mt-1`}
     >
       {title}
     </Text>

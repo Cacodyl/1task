@@ -53,9 +53,7 @@ export default function Index() {
 
   const { data: tosetastotalitems } = useFetchTotitQuery();
   useEffect(() => {
-    
-      settotalitems(tosetastotalitems);
-   
+    settotalitems(tosetastotalitems);
   }, [tosetastotalitems]);
 
   const router = useRouter();
